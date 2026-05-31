@@ -728,6 +728,165 @@ footer {
 }
 
 /* ==========================================================================
+   時間表摺疊區 (Accordion) 與表格樣式
+   ========================================================================== */
+.day-details {
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.day-details[open] {
+  border-color: var(--teal);
+  box-shadow: 0 4px 12px rgba(29, 138, 132, 0.08);
+}
+
+.details-summary {
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--teal);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  list-style: none; /* 移除預設三角形 */
+}
+
+.details-summary::-webkit-details-marker {
+  display: none; /* 針對 Safari 移除預設三角形 */
+}
+
+.summary-arrow {
+  width: 18px;
+  height: 18px;
+  color: var(--teal);
+  transition: transform 0.3s ease;
+}
+
+.day-details[open] .summary-arrow {
+  transform: rotate(180deg);
+}
+
+.details-content {
+  padding: 16px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 24px;
+  background: #ffffff;
+}
+
+.schedule-group h4 {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--ink);
+  border-left: 3px solid var(--blue);
+  padding-left: 8px;
+}
+
+.day-details[open] .schedule-group:nth-child(2) h4 {
+  border-left-color: var(--teal);
+}
+
+.day-details[open] .schedule-group:nth-child(3) h4 {
+  border-left-color: var(--coral);
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.schedule-table th {
+  background: #f1f6f8;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.time-col {
+  width: 110px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.event-col {
+  width: 160px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.note-col {
+  color: var(--muted);
+}
+
+.schedule-table tr:hover {
+  background: #fafcfc;
+}
+
+/* 響應式表格：在小螢幕下轉為卡片 */
+@media (max-width: 640px) {
+  .schedule-table, 
+  .schedule-table thead, 
+  .schedule-table tbody, 
+  .schedule-table th, 
+  .schedule-table td, 
+  .schedule-table tr {
+    display: block;
+  }
+  
+  .schedule-table thead {
+    display: none; /* 隱藏表頭 */
+  }
+  
+  .schedule-table tr {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #fdfefe;
+  }
+  
+  .schedule-table td {
+    border-bottom: 0;
+    padding: 4px 6px;
+  }
+  
+  .time-col {
+    font-size: 0.9rem;
+    color: var(--teal);
+    display: inline-block;
+  }
+  
+  .event-col {
+    font-size: 0.9rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+    display: block;
+  }
+  
+  .note-col {
+    font-size: 0.82rem;
+    display: block;
+    color: var(--muted);
+  }
+}
+
+/* ==========================================================================
    列印模式設計排版 (@media print)
    ========================================================================== */
 @media print {
