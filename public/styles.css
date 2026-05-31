@@ -1,0 +1,810 @@
+/* ==========================================================================
+   全域變數與色彩系統 (CSS Custom Properties)
+   ========================================================================== */
+:root {
+  color-scheme: light;
+  --ink: #20313b;
+  --muted: #657784;
+  --line: #d8e3e7;
+  --paper: #f7faf9;
+  --panel: #ffffff;
+  
+  /* 品牌與行程分類色彩 */
+  --blue: #2364aa;
+  --teal: #1d8a84;
+  --coral: #d85f45;
+  --gold: #b8842f;
+  --green: #547d43;
+  
+  /* 精緻陰影 */
+  --shadow: 0 16px 40px rgba(32, 49, 59, 0.08);
+  --shadow-hover: 0 24px 48px rgba(32, 49, 59, 0.15);
+  
+  /* 平滑過渡時間 */
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ==========================================================================
+   基礎樣式重設
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Outfit", "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 網頁寬度容器限制 */
+.wrap {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Hero 主視覺橫幅區
+   ========================================================================== */
+.hero {
+  min-height: 72vh;
+  display: grid;
+  align-items: end;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+  /* 多層精美漸層疊加 SVG 波浪插畫 background */
+  background:
+    linear-gradient(180deg, rgba(13, 32, 45, 0.2), rgba(13, 32, 45, 0.85)),
+    linear-gradient(115deg, rgba(35, 100, 170, 0.85), rgba(29, 138, 132, 0.75) 48%, rgba(216, 95, 69, 0.7)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 950'%3E%3Crect width='1600' height='950' fill='%238dc4c6'/%3E%3Cpath d='M0 700 C260 585 420 780 680 650 C910 535 1070 610 1280 500 C1440 416 1530 430 1600 388 L1600 950 L0 950 Z' fill='%232c7a82'/%3E%3Cpath d='M0 790 C210 735 365 845 570 785 C820 710 1010 775 1215 690 C1375 624 1490 637 1600 602 L1600 950 L0 950 Z' fill='%231c5667'/%3E%3Cpath d='M185 330 L280 290 L405 345 L500 305 L640 365 L760 315 L910 380 L1040 330 L1205 390 L1350 335 L1488 378 L1600 340 L1600 0 L0 0 L0 360 Z' fill='%23e9f4f2' opacity='.34'/%3E%3Ccircle cx='1240' cy='168' r='54' fill='%23f8d98c' opacity='.84'/%3E%3Cpath d='M185 510 C290 455 420 462 545 505 C682 552 805 548 940 498 C1050 458 1190 444 1335 492' fill='none' stroke='%23fff7e7' stroke-width='14' stroke-linecap='round' opacity='.78'/%3E%3Cpath d='M424 495 l42 -16 l-15 41 z' fill='%23fff7e7' opacity='.9'/%3E%3Cpath d='M877 515 l42 -16 l-15 41 z' fill='%23fff7e7' opacity='.9'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 20vh;
+  background: linear-gradient(180deg, rgba(247, 250, 249, 0), var(--paper));
+  pointer-events: none;
+}
+
+.hero-content {
+  padding: 80px 0 100px;
+  max-width: 820px;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #f9e1a5;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+  margin: 0;
+  max-width: 780px;
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+  margin: 20px 0 0;
+  max-width: 680px;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.7;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   重點指標快速欄 (Quickbar)
+   ========================================================================== */
+.quickbar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: -48px;
+  position: relative;
+  z-index: 2;
+}
+
+.metric {
+  min-height: 110px;
+  padding: 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  border-radius: 12px;
+  transition: var(--transition);
+}
+
+.metric:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--teal);
+}
+
+.metric strong {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1.15;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.metric span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   通用 Section 排版
+   ========================================================================== */
+section {
+  padding: 64px 0;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 16px;
+}
+
+h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--ink);
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--teal);
+  border-radius: 2px;
+}
+
+.section-note {
+  margin: 0;
+  max-width: 480px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.panel:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* ==========================================================================
+   交通銜接區 (Connection)
+   ========================================================================== */
+.connection {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* 左側：航線路線圖 */
+.route-map {
+  padding: 30px;
+  display: grid;
+  align-content: center;
+  gap: 28px;
+  background: linear-gradient(135deg, #eef7f4, #f5f8fc);
+}
+
+.route-row {
+  display: grid;
+  grid-template-columns: 96px 1fr 96px;
+  gap: 16px;
+  align-items: center;
+}
+
+.route-node {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  padding: 12px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-align: center;
+  line-height: 1.25;
+  box-shadow: 0 8px 24px rgba(32, 49, 59, 0.15);
+  transition: var(--transition);
+}
+
+.route-node:hover {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.node-blue {
+  background: var(--blue);
+}
+
+.node-teal {
+  background: var(--teal);
+}
+
+.node-coral {
+  background: var(--coral);
+}
+
+/* 動態虛線傳送線 */
+.route-line-container {
+  position: relative;
+  height: 6px;
+  background: #cbdce3;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.route-line {
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(90deg, transparent, transparent 8px, #ffffff 8px, #ffffff 16px);
+  animation: routeFlow 8s linear infinite;
+}
+
+@keyframes routeFlow {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 80px 0;
+  }
+}
+
+.route-caption {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.route-caption div {
+  padding: 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(216, 227, 231, 0.8);
+  transition: var(--transition);
+}
+
+.route-caption div:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  border-color: var(--teal);
+}
+
+.route-caption b {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.route-caption span {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* 右側：交通銜接說明清單 */
+.info-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info-list li {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 16px;
+  padding: 24px;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+
+.info-list li:last-child {
+  border-bottom: 0;
+}
+
+.label {
+  color: var(--teal);
+  font-weight: 800;
+  font-size: 0.95rem;
+  position: relative;
+  padding-left: 12px;
+}
+
+.label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 12px;
+  background: var(--teal);
+  border-radius: 2px;
+}
+
+.value {
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   時間線行程區 (Timeline)
+   ========================================================================== */
+.timeline {
+  display: grid;
+  gap: 18px;
+}
+
+.day {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.day:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.day-date {
+  padding: 24px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--blue);
+  transition: var(--transition);
+}
+
+/* 精美的前端色彩主題彩帶區分 */
+.day:nth-child(1) .day-date { background: var(--blue); }
+.day:nth-child(2) .day-date { background: var(--teal); }
+.day:nth-child(3) .day-date { background: var(--green); }
+.day:nth-child(4) .day-date { background: var(--coral); }
+.day:nth-child(5) .day-date { background: var(--gold); }
+
+.day-date strong {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.day-date span {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.day-body {
+  padding: 24px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.day-body h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.day-body p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+/* ==========================================================================
+   票務與實用提醒區 (Tips)
+   ========================================================================== */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.tip-card {
+  padding: 24px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.tip-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 卡片上方彩色線條裝飾 */
+.tip-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+}
+
+.tip-card:nth-child(1)::before { background: var(--teal); }
+.tip-card:nth-child(2)::before { background: var(--blue); }
+.tip-card:nth-child(3)::before { background: var(--coral); }
+.tip-card:nth-child(4)::before { background: var(--gold); }
+
+.tip-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 14px;
+}
+
+.tip-badge--teal { background: var(--teal); }
+.tip-badge--blue { background: var(--blue); }
+.tip-badge--coral { background: var(--coral); }
+.tip-badge--gold { background: var(--gold); }
+
+.tip-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.tip-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* 重要提示警示欄 */
+.notice-bar {
+  margin-top: 24px;
+  padding: 20px 24px;
+  border-left: 6px solid var(--coral);
+  background: #fff6f3;
+  color: #7d3525;
+  border-radius: 8px;
+  display: flex;
+  gap: 16px;
+  align-items: start;
+}
+
+.notice-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--coral);
+}
+
+.notice-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   操作按鈕區 (Print & Top)
+   ========================================================================== */
+.print-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 24px 0 64px;
+}
+
+.button {
+  appearance: none;
+  border: 0;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(32, 49, 59, 0.08);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(32, 49, 59, 0.15);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button-print {
+  background: var(--ink);
+  color: #ffffff;
+}
+
+.button-print:hover {
+  background: #142028;
+}
+
+.button-top {
+  background: #e9f0f3;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.button-top:hover {
+  background: #dce7ec;
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==========================================================================
+   頁尾 (Footer)
+   ========================================================================== */
+footer {
+  padding: 30px 0 42px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  background: #ffffff;
+  font-size: 0.92rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-title {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.footer-date {
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   響應式設計 (RWD Media Queries)
+   ========================================================================== */
+@media (max-width: 960px) {
+  .quickbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .connection {
+    grid-template-columns: 1fr;
+  }
+
+  .tips-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .day {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 60vh;
+  }
+
+  .hero-content {
+    padding: 48px 0 72px;
+  }
+
+  h1 {
+    font-size: 2.1rem;
+  }
+
+  .quickbar,
+  .tips-grid,
+  .route-caption {
+    grid-template-columns: 1fr;
+  }
+
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .route-row {
+    grid-template-columns: 80px 1fr 80px;
+    gap: 10px;
+  }
+
+  .route-node {
+    width: 80px;
+    height: 80px;
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  .info-list li {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 20px;
+  }
+
+  .day {
+    grid-template-columns: 1fr;
+  }
+
+  .day-date {
+    padding: 16px 20px;
+  }
+
+  .day-body {
+    padding: 20px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* ==========================================================================
+   列印模式設計排版 (@media print)
+   ========================================================================== */
+@media print {
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .hero {
+    min-height: auto;
+    color: #000000;
+    background: none !important;
+    padding: 0;
+  }
+
+  .hero::after,
+  .print-actions,
+  .btn-icon {
+    display: none !important;
+  }
+
+  .hero-content {
+    padding: 0 0 20px;
+  }
+
+  .eyebrow,
+  .subtitle {
+    color: #000000;
+    text-shadow: none !important;
+  }
+
+  section {
+    padding: 20px 0;
+  }
+
+  .metric,
+  .panel,
+  .day,
+  .tip-card {
+    box-shadow: none !important;
+    border: 1px solid #000000 !important;
+    break-inside: avoid;
+  }
+
+  .route-map {
+    background: none !important;
+  }
+
+  .route-node {
+    box-shadow: none !important;
+    border: 1px solid #000000 !important;
+    color: #000000 !important;
+    background: none !important;
+  }
+
+  .route-caption div {
+    background: none !important;
+    border: 1px solid #000000 !important;
+  }
+
+  .day-date {
+    background: none !important;
+    color: #000000 !important;
+    border-bottom: 1px solid #000000 !important;
+  }
+
+  .day-body {
+    padding: 15px;
+  }
+
+  .tip-card::before {
+    display: none;
+  }
+
+  .tip-badge {
+    border: 1px solid #000000;
+    color: #000000 !important;
+    background: none !important;
+  }
+}

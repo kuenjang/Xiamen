@@ -1,45 +1,18 @@
-import { createReadStream, existsSync, statSync } from "node:fs";
-import { createServer } from "node:http";
-import { extname, join, normalize } from "node:path";
-import { fileURLToPath } from "node:url";
+const express = require('express');
+const path = require('path');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
-const publicDir = join(__dirname, "public");
-const port = Number(process.env.PORT || 3000);
+// 託管 public 資料夾中的靜態資源
+app.use(express.static(path.join(__dirname, 'public')));
 
-const types = {
-  ".html": "text/html; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".svg": "image/svg+xml",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".webp": "image/webp"
-};
+// 處理所有其他路由，預設導向 index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-function resolvePublicPath(urlPath) {
-  const cleanPath = normalize(decodeURIComponent(urlPath.split("?")[0])).replace(/^(\.\.[/\\])+/, "");
-  const requestedPath = join(publicDir, cleanPath === "/" ? "index.html" : cleanPath);
-
-  if (existsSync(requestedPath) && statSync(requestedPath).isFile()) {
-    return requestedPath;
-  }
-
-  return join(publicDir, "index.html");
-}
-
-createServer((req, res) => {
-  const filePath = resolvePublicPath(req.url || "/");
-  const contentType = types[extname(filePath).toLowerCase()] || "application/octet-stream";
-
-  res.writeHead(200, {
-    "Content-Type": contentType,
-    "Cache-Control": "public, max-age=300"
-  });
-
-  createReadStream(filePath).pipe(res);
-}).listen(port, () => {
-  console.log(`Xiamen itinerary running at http://localhost:${port}`);
+// 啟動伺服器
+app.listen(PORT, () => {
+  console.log(`[系統訊息] 伺服器已成功啟動！`);
+  console.log(`[系統訊息] 本地存取網址：http://localhost:${PORT}`);
 });

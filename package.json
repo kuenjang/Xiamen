@@ -1,14 +1,21 @@
 {
-  "name": "xiamen-itinerary",
+  "name": "xiamen-travel-plan",
   "version": "1.0.0",
-  "private": true,
-  "description": "Node.js travel itinerary page for Kaohsiung, Kinmen, and Xiamen.",
-  "type": "module",
+  "description": "高雄、金門、廈門小三通旅行計畫 (Node.js 伺服器版)",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node server.js"
   },
-  "engines": {
-    "node": ">=20"
+  "keywords": [
+    "nodejs",
+    "express",
+    "travel",
+    "kinmen",
+    "xiamen"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }
