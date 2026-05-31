@@ -1,0 +1,5 @@
+node_modules/
+.vercel/
+outputs/
+work/
+npm-debug.log*
