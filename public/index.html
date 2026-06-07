@@ -640,6 +640,120 @@
       </div>
     </section>
 
+    <!-- 預算規劃區 -->
+    <section id="budget">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>💰 5天4夜廈門行 一人預算總表</h2>
+          <p class="section-note">台幣計價（以匯率 1 RMB ≈ 4.5 TWD 換算），含小三通來回套票及基本開銷，備用金可彈性調整。</p>
+        </div>
+
+        <!-- 預算動態儀表板 -->
+        <div class="budget-dashboard">
+          <div class="budget-kpi-container">
+            <div class="budget-kpi-card highlight">
+              <span class="kpi-label">總預估費用 (NT$)</span>
+              <strong id="total-budget-val" class="kpi-value">NT$17,135</strong>
+              <span class="kpi-desc" id="total-budget-desc">含備用金，不含私人購物</span>
+            </div>
+            <div class="budget-kpi-card">
+              <span class="kpi-label">基本花費 (NT$)</span>
+              <strong id="base-budget-val" class="kpi-value">NT$16,235</strong>
+              <span class="kpi-desc">不含備用金與購物</span>
+            </div>
+          </div>
+
+          <!-- 互動控制面板 -->
+          <div class="budget-controls panel">
+            <h3>預算動態試算</h3>
+            <div class="control-group">
+              <label for="travelers-count">同行人數</label>
+              <div class="stepper">
+                <button type="button" class="stepper-btn" onclick="adjustTravelers(-1)">−</button>
+                <input type="number" id="travelers-count" value="1" min="1" max="20" readonly>
+                <button type="button" class="stepper-btn" onclick="adjustTravelers(1)">+</button>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="switch-container">
+                <input type="checkbox" id="include-spare-cash" checked onchange="toggleSpareCash()">
+                <span class="switch-slider"></span>
+                <span class="switch-label">包含備用金 (NT$900/人)</span>
+              </label>
+            </div>
+            <div class="summary-stat">
+              <span class="summary-label">試算總額：</span>
+              <strong id="calc-total" class="summary-value">NT$17,135</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- 預算細項表格 -->
+        <div class="panel budget-table-wrapper">
+          <table class="budget-table">
+            <thead>
+              <tr>
+                <th style="width: 25%">項目</th>
+                <th style="width: 20%">費用 (每人)</th>
+                <th style="width: 15%">分類</th>
+                <th style="width: 40%">備註與說明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-cost="7200" data-is-spare="false">
+                <td><b>小三通來回套票</b></td>
+                <td class="cost-col">NT$7,200</td>
+                <td><span class="badge badge--blue">交通</span></td>
+                <td>你已確認（台南出發，含機票+船票+接駁）</td>
+              </tr>
+              <tr data-cost="3600" data-is-spare="false">
+                <td><b>住宿 (4晚)</b></td>
+                <td class="cost-col">約 NT$3,600</td>
+                <td><span class="badge badge--teal">住宿</span></td>
+                <td>每人每晚¥200 × 4晚，匯率約4.5</td>
+              </tr>
+              <tr data-cost="2700" data-is-spare="false">
+                <td><b>餐飲 (5天)</b></td>
+                <td class="cost-col">約 NT$2,700</td>
+                <td><span class="badge badge--green">餐飲</span></td>
+                <td>每日約¥150（約NT$675）</td>
+              </tr>
+              <tr data-cost="450" data-is-spare="false">
+                <td><b>廈門交通</b></td>
+                <td class="cost-col">約 NT$450</td>
+                <td><span class="badge badge--blue">交通</span></td>
+                <td>地鐵/BRT/打車，每日抓¥25</td>
+              </tr>
+              <tr data-cost="585" data-is-spare="false">
+                <td><b>景點門票</b></td>
+                <td class="cost-col">約 NT$585</td>
+                <td><span class="badge badge--gold">景點</span></td>
+                <td>鼓浪嶼船票¥35 + 日光岩¥50 + 菽莊花園¥30 ≈ ¥115</td>
+              </tr>
+              <tr data-cost="800" data-is-spare="false">
+                <td><b>機場稅+碼頭清潔費</b></td>
+                <td class="cost-col">約 NT$800</td>
+                <td><span class="badge badge--coral">雜費</span></td>
+                <td>兩地機場稅＋小三通碼頭清潔費</td>
+              </tr>
+              <tr data-cost="900" data-is-spare="false">
+                <td><b>雜支 (飲料/點心/紀念品)</b></td>
+                <td class="cost-col">約 NT$900</td>
+                <td><span class="badge badge--coral">雜費</span></td>
+                <td>每日抓¥50</td>
+              </tr>
+              <tr class="spare-row" data-cost="900" data-is-spare="true">
+                <td><b>備用金 (彈性預留)</b></td>
+                <td class="cost-col">約 NT$900</td>
+                <td><span class="badge badge--muted">備用金</span></td>
+                <td>以備不時之需</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <!-- 票務與重要提醒 -->
     <section id="tips">
       <div class="wrap">
@@ -706,5 +820,63 @@
       <span class="footer-date">旅行日期：7/15 - 7/19</span>
     </div>
   </footer>
+
+  <!-- 預算互動計算 JavaScript -->
+  <script>
+    function adjustTravelers(amount) {
+      const input = document.getElementById('travelers-count');
+      let val = parseInt(input.value) || 1;
+      val += amount;
+      if (val < 1) val = 1;
+      if (val > 20) val = 20;
+      input.value = val;
+      calculateTotal();
+    }
+
+    function toggleSpareCash() {
+      const spareRow = document.querySelector('.spare-row');
+      const includeSpare = document.getElementById('include-spare-cash').checked;
+      if (includeSpare) {
+        spareRow.classList.remove('row-disabled');
+      } else {
+        spareRow.classList.add('row-disabled');
+      }
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      const travelers = parseInt(document.getElementById('travelers-count').value) || 1;
+      const includeSpare = document.getElementById('include-spare-cash').checked;
+      
+      let costPerPerson = 0;
+      const rows = document.querySelectorAll('.budget-table tbody tr');
+      
+      rows.forEach(row => {
+        const cost = parseInt(row.getAttribute('data-cost')) || 0;
+        const isSpare = row.getAttribute('data-is-spare') === 'true';
+        if (!isSpare || includeSpare) {
+          costPerPerson += cost;
+        }
+      });
+
+      const totalCost = costPerPerson * travelers;
+      
+      // 更新試算總額
+      document.getElementById('calc-total').innerText = 'NT$' + totalCost.toLocaleString();
+      
+      // 更新 KPI 卡片的顯示說明
+      const desc = document.getElementById('total-budget-desc');
+      if (travelers > 1) {
+        desc.innerText = `含備用金，${travelers} 人總計 NT$${(17135 * travelers).toLocaleString()}`;
+      } else {
+        desc.innerText = '含備用金，不含私人購物';
+      }
+    }
+
+    // 初始化計算
+    document.addEventListener('DOMContentLoaded', () => {
+      calculateTotal();
+    });
+  </script>
 </body>
 </html>

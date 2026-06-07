@@ -887,6 +887,348 @@ footer {
 }
 
 /* ==========================================================================
+   預算規劃區 (Budget Section)
+   ========================================================================== */
+#budget {
+  background: linear-gradient(180deg, var(--paper), #eef5f7);
+  padding: 64px 0;
+}
+
+.budget-dashboard {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.budget-kpi-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.budget-kpi-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.budget-kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.budget-kpi-card.highlight {
+  border-color: var(--blue);
+  background: linear-gradient(135deg, #ffffff, #f0f7fc);
+}
+
+.budget-kpi-card.highlight .kpi-value {
+  color: var(--blue);
+}
+
+.kpi-label {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.kpi-value {
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.kpi-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* 試算控制面板 */
+.budget-controls {
+  padding: 24px;
+  background: var(--panel);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.budget-controls h3 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-group label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Stepper 元件 */
+.stepper {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+  max-width: 140px;
+}
+
+.stepper-btn {
+  background: #f1f6f8;
+  border: 0;
+  color: var(--ink);
+  width: 40px;
+  height: 36px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  user-select: none;
+  transition: var(--transition);
+}
+
+.stepper-btn:hover {
+  background: #cbdce3;
+}
+
+.stepper input {
+  width: 40px;
+  height: 36px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  text-align: center;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--ink);
+  outline: none;
+  background: #ffffff;
+}
+
+/* Switch 元件 */
+.switch-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switch-container input {
+  display: none;
+}
+
+.switch-slider {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background-color: #cbdce3;
+  border-radius: 12px;
+  transition: var(--transition);
+}
+
+.switch-slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: var(--transition);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.switch-container input:checked + .switch-slider {
+  background-color: var(--teal);
+}
+
+.switch-container input:checked + .switch-slider::before {
+  transform: translateX(20px);
+}
+
+.switch-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.summary-stat {
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.summary-value {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--coral);
+}
+
+/* 表格包裝區 */
+.budget-table-wrapper {
+  background: var(--panel);
+}
+
+.budget-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.budget-table th,
+.budget-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+
+.budget-table th {
+  background: #f1f6f8;
+  color: var(--ink);
+  font-weight: 800;
+  border-bottom: 2px solid var(--line);
+}
+
+.budget-table tbody tr {
+  transition: var(--transition);
+}
+
+.budget-table tbody tr:hover {
+  background: #fafcfc;
+}
+
+.budget-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.cost-col {
+  font-weight: 800;
+  color: var(--ink);
+}
+
+/* Badge 標籤樣式 */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.badge--blue { background: var(--blue); }
+.badge--teal { background: var(--teal); }
+.badge--green { background: var(--green); }
+.badge--coral { background: var(--coral); }
+.badge--gold { background: var(--gold); }
+.badge--muted { background: var(--muted); }
+
+/* 行程細項中的 row 停用狀態 */
+.row-disabled {
+  opacity: 0.4;
+  background: #fafafa;
+}
+
+.row-disabled .cost-col {
+  text-decoration: line-through;
+}
+
+/* ==========================================================================
+   預算表格與 RWD 響應式調整
+   ========================================================================== */
+@media (max-width: 960px) {
+  .budget-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .budget-kpi-container {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi-value {
+    font-size: 1.8rem;
+  }
+
+  /* 表格在手機端轉換為卡片流式排版 */
+  .budget-table,
+  .budget-table thead,
+  .budget-table tbody,
+  .budget-table th,
+  .budget-table td,
+  .budget-table tr {
+    display: block;
+  }
+
+  .budget-table thead {
+    display: none;
+  }
+
+  .budget-table tr {
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .budget-table td {
+    padding: 6px 0;
+    border-bottom: 0;
+  }
+
+  .budget-table td:nth-child(1) {
+    font-size: 1.05rem;
+    font-weight: 800;
+  }
+
+  .budget-table td:nth-child(2) {
+    display: inline-block;
+    margin-right: 12px;
+  }
+
+  .budget-table td:nth-child(3) {
+    display: inline-block;
+  }
+
+  .budget-table td:nth-child(4) {
+    display: block;
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin-top: 4px;
+  }
+}
+
+/* ==========================================================================
    列印模式設計排版 (@media print)
    ========================================================================== */
 @media print {
@@ -962,6 +1304,43 @@ footer {
   }
 
   .tip-badge {
+    border: 1px solid #000000;
+    color: #000000 !important;
+    background: none !important;
+  }
+
+  /* 列印模式下的預算區塊適配 */
+  .budget-controls,
+  .stepper-btn {
+    display: none !important;
+  }
+
+  .budget-dashboard {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .budget-kpi-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .budget-kpi-card {
+    border: 1px solid #000000 !important;
+    box-shadow: none !important;
+    background: none !important;
+  }
+
+  .budget-table-wrapper {
+    border: 1px solid #000000 !important;
+    box-shadow: none !important;
+  }
+
+  .budget-table th,
+  .budget-table td {
+    border-bottom: 1px solid #000000 !important;
+  }
+
+  .badge {
     border: 1px solid #000000;
     color: #000000 !important;
     background: none !important;
