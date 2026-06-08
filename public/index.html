@@ -116,6 +116,31 @@
           <p class="section-note">節奏以第一天安頓身心、第二天探索鼓浪嶼、第三天巡禮市區經典、第四天彈性返金門為主。</p>
         </div>
 
+        <!-- 廈門導覽地圖展示區 -->
+        <div class="panel map-showcase-panel">
+          <div class="map-showcase-header">
+            <div class="map-title-row">
+              <h3>🗺️ 廈門市中心 & 鼓浪嶼導覽地圖</h3>
+              <button class="button-zoom-hint" onclick="openMapModal()">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                </svg>
+                點擊放大地圖
+              </button>
+            </div>
+            <p>手繪風格的景點與交通路線圖（包含輪渡、地鐵與環島路騎行道），建議對照行程表使用。</p>
+          </div>
+          <div class="map-image-wrapper" onclick="openMapModal()">
+            <img src="xiamen-map.jpg" alt="廈門市中心 & 鼓浪嶼導覽地圖" class="interactive-map">
+            <div class="map-hover-overlay">
+              <svg class="overlay-zoom-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+              </svg>
+              <span>點擊開啟高解析度地圖</span>
+            </div>
+          </div>
+        </div>
+
         <div class="timeline">
           <article class="day">
             <div class="day-date">
@@ -821,6 +846,14 @@
     </div>
   </footer>
 
+  <!-- 地圖放大 Modal 燈箱 -->
+  <div id="map-modal" class="map-modal" onclick="closeMapModal()">
+    <button class="modal-close-btn" onclick="closeMapModal()">&times;</button>
+    <div class="modal-content-wrapper" onclick="event.stopPropagation()">
+      <img src="xiamen-map.jpg" alt="廈門導覽地圖放大版" class="modal-img">
+    </div>
+  </div>
+
   <!-- 預算互動計算 JavaScript -->
   <script>
     function adjustTravelers(amount) {
@@ -876,6 +909,25 @@
     // 初始化計算
     document.addEventListener('DOMContentLoaded', () => {
       calculateTotal();
+    });
+
+    // 地圖放大燈箱控制
+    function openMapModal() {
+      const modal = document.getElementById('map-modal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMapModal() {
+      const modal = document.getElementById('map-modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMapModal();
+      }
     });
   </script>
 </body>
